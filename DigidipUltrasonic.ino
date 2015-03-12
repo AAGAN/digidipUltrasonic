@@ -68,7 +68,7 @@ const uint8_t compNum = 8; //Number of readings to compare the current reading t
 // milliseconds between reading data
 //const uint8_t dataRate=10;
 
-const int tripod = 605;
+const int tripod = 615;
 
 char tempString[10];  // Will be used with sprintf to create strings
 
@@ -129,6 +129,9 @@ void setup(void)
 	pinMode(12, INPUT);
 	pinMode(13, OUTPUT);
 	digitalWrite(13, LOW);
+
+    pinMode(7, OUTPUT);
+    digitalWrite(7, HIGH);
 
 	// -------- SPI initialization
 	pinMode(SSD, OUTPUT);  // Set the SS pin as an output
@@ -210,8 +213,8 @@ void setup(void)
 		}
 	}
 	if(testType==1){cycle = 1;}
-	else{cycle = 4;}
-	delay(500);
+    else{ cycle = 4; LWD = 1; }
+	delay(200);
 	testType -= 1;
 	// if testType is 0 then it is a residential test, if testType is 1 then it is a commercial test
 	
@@ -293,12 +296,14 @@ void setup(void)
 		logfile.println("RTC failed");
 	}
 
+    //RTC.adjust(DateTime(__DATE__, __TIME__));
+    delay(100);
 	if (! RTC.isrunning()) {
 		// following line sets the RTC to the date & time this sketch was compiled
 		// uncomment it & upload to set the time, date and start run the RTC!
 		//		RTC.adjust(DateTime(__DATE__, __TIME__));
 	} 
-    RTC.adjust(DateTime(__DATE__, __TIME__));
+    delay(100);
     DateTime now = RTC.now();
     now = RTC.now();
 	
@@ -393,10 +398,10 @@ void loop(void)
 	Button1 = digitalRead(button1pin);
 	unsigned long timeDelay = 0;
 	boolean switchGreen = 1;
-
+    digitalWrite(7, LOW);
 	while(!Button1)
 	{
-
+        digitalWrite(7, HIGH);
 		// delay for the amount of time we want between readings
 		reading = 1;
 		//delay(dataRate);
@@ -588,7 +593,7 @@ void loop(void)
 				logfile.print(depthf);
 
 				logfile.print("\t ");
-				logfile.println(weight/10.0);
+				logfile.println(weight);
 
 				/*logfile.print(", ");
 				logfile.print(density/100.0,3); */                          
