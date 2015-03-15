@@ -1,11 +1,11 @@
 //---------------------------------------------------------------
 // Code for implementing digital dipstick algorithm -------------
 //---------------------------------------------------------------
-#include <SD.h> //SD Library
+#include <SD\SD.h> //SD Library
 #include <Wire.h> //I2C Library
 #include <SPI.h> //SPI Library
-#include "RTClib.h" //Real Time Clock Library
-#include <Adafruit_MPL3115A2.h>
+#include <RTClib\RTClib.h> //Real Time Clock Library
+#include <Adafruit_MPL3115A2_Library\Adafruit_MPL3115A2.h>
 //---------------------------------------------------------------
 /*
 Pin Configuration:
